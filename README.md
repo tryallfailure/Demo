@@ -58,14 +58,19 @@ The system processes image sequences from live rabbit experiments and test datas
 - **Python**: 3.8.20 (CPython)
 
 ### Environment Setup
+1. Clone the repository:
+```bash
+git clone https://github.com/tryallfailure/Demo.git
+cd Demo
+```
 
-1. Create conda environment:
+2. Create conda environment:
 ```bash
 conda create -n force_predict python=3.8 -y
 conda activate force_predict
 ```
 
-2. Install dependencies:
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
