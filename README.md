@@ -5,7 +5,6 @@ This repository contains two main components:
 2. **propainter**: Video inpainting module for preprocessing and mask generation
 
 The system processes image sequences from live rabbit experiments and test datasets to predict force vectors.
-
 ---
 
 ## 🗂️ Project Structure
