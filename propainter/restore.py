@@ -180,9 +180,9 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '-i', '--video', type=str, default='inputs/object_removal/bmx-trees', help='Path of the input video or image folder.')
+        '-i', '--video', type=str, default='inputs/test/prodata', help='Path of the input video or image folder.')
     parser.add_argument(
-        '-m', '--mask', type=str, default='inputs/object_removal/bmx-trees_mask', help='Path of the mask(s) or mask folder.')
+        '-m', '--mask', type=str, default='inputs/test/mask', help='Path of the mask(s) or mask folder.')
     parser.add_argument(
         '-o', '--output', type=str, default='results', help='Output folder. Default: results')
     parser.add_argument(
