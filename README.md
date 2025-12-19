@@ -1,46 +1,47 @@
-## 📋 Project Overview
+# T-Scope: Trimodal Endoscopic Sensing Platform
 
-This repository contains two main components:
-1. **force_predict**: A CNN-based model for predicting 3D force vectors from binary images
-2. **propainter**: Video inpainting module for preprocessing and mask generation
+This repository provides the complete implementation, datasets, and results for the T-Scope system described in  *“Superelastic Tellurium Thermoelectric Coatings for Advanced Trimodal Microsensing”*.
 
-The system processes image sequences from live rabbit experiments and test datasets to predict force vectors.
+---
+
+## Contents
+1. **EndoForce-Net**: 3D force-vector regression from thermoelectric imprint images  
+2. **Painting restoration**: removal of Te-pattern occlusion from endoscopic video  
+3. **Datasets & results**: in-vivo rabbit sequences and ex-vivo test sets with ground-truth force labels
+
 ---
 
 ## 🗂️ Project Structure
 
 ```
-├── force_predict/
-│   ├── pth/
-│   │   └── model.pth              # Trained model weights
-│   ├── rabbit/                    # Live rabbit experiment data
-│   │   ├── prodata/               # Original raw images
-│   │   │   └── frame_0001.jpg
-│   │   │   └── ... (frame_0001.jpg - frame_0200.jpg)
-│   │   └── binarydata/            # Binarized images
-│   │       └── frame_0001.jpg
-│   │       └── ... (frame_0001.jpg - frame_0200.jpg)
-│   ├── test/                      # Test dataset with ground truth
-│   │   ├── prodata/               # Original test images
-│   │   ├── binarydata/            # Binarized test images
-│   │   └── data/
-│   │       └── data.csv           # Ground truth force data
-│   ├── utils/
-│   │   └── model.py               # Model architecture definition
-│   └── main.py                    # Main prediction script
+T-Scope/
+├── EndoForce-Net/
+│   ├── weights/
+│   │   └── EndoForce_net.pth        # trained model
+│   ├── rabbit/
+│   │   ├── raw_frames/              # 200 original frames
+│   │   └── binary_frames/           # segmented imprint images
+│   ├── test/
+│   │   ├── raw_frames/
+│   │   ├── binary_frames/
+│   │   └── ground_truth/
+│   │       └── forces.csv           # X,Y,Z labels [N]
+│   ├── model/
+│   │   └── EndoForce_net.py         # network definition
+│   └── infer.py                     # inference script
 │
-├── propainter/                    # Video inpainting module
-│   ├── inference_propainter.py    # Inpainting inference script
+├── painting/
+│   ├── restore.py                   # inpainting entry point
 │   ├── inputs/
 │   │   ├── rabbit/
-│   │   │   ├── prodata/           # Input video frames
-│   │   │   └── mask/              # Input masks
+│   │   │   ├── frames/
+│   │   │   └── masks/               # Te-marker masks
 │   │   └── test/
-│   │       ├── prodata/           # Input video frames
-│   │       └── mask/              # Input masks
-│   └── [other ProPainter files]
+│   │       ├── frames/
+│   │       └── masks/
+│   └── outputs/                     # restored videos
 │
-├── requirements.txt               # Python dependencies
+└── requirements.txt
 └── README.md
 ```
 
@@ -48,7 +49,7 @@ The system processes image sequences from live rabbit experiments and test datas
 
 ## 🔧 Installation
 
-### System Requirements
+## Hardware & Software Environment
 - **OS**: Ubuntu 22.04.5 LTS x86_64
 - **CPU**: Intel Xeon Platinum 8581C (240 cores)
 - **GPU**: NVIDIA RTX A6000
@@ -58,19 +59,14 @@ The system processes image sequences from live rabbit experiments and test datas
 - **Python**: 3.8.20 (CPython)
 
 ### Environment Setup
-1. Clone the repository:
+
+1. Create conda environment:
 ```bash
-git clone https://github.com/tryallfailure/Demo.git
-cd Demo
+conda create -n tscope python=3.8 -y
+conda activate tscope
 ```
 
-2. Create conda environment:
-```bash
-conda create -n force_predict python=3.8 -y
-conda activate force_predict
-```
-
-3. Install dependencies:
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
@@ -94,14 +90,13 @@ pip install -r requirements.txt
 
 #### Predict forces from test dataset (with ground truth comparison):
 ```bash
-cd force_predict
-python main.py --data test/binarydata
+cd EndoForce-Net
+python infer.py --data test/binarydata --gt test/ground_truth/forces.csv
 ```
 
 #### Predict forces from rabbit experiment data:
 ```bash
-cd force_predict
-python main.py --data rabbit/binarydata
+python infer.py --data rabbit/binarydata
 ```
 
 #### Input Data Format
@@ -113,14 +108,13 @@ python main.py --data rabbit/binarydata
 
 #### Process rabbit experiment video:
 ```bash
-cd propainter
-python inference_propainter.py --video inputs/rabbit/prodata --mask inputs/rabbit/mask
+cd painting
+python restore.py --video inputs/rabbit/prodata --mask inputs/rabbit/mask
 ```
 
 #### Process test dataset video:
 ```bash
-cd propainter
-python inference_propainter.py --video inputs/test/prodata --mask inputs/test/mask
+python restore.py --video inputs/test/prodata --mask inputs/test/mask
 ```
 
 #### Output Files
