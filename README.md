@@ -30,8 +30,8 @@ T-Scope/
 │   │   └── EndoForce_net.py         # network definition
 │   └── infer.py                     # inference script
 │
-├── painting/
-│   ├── restore.py                   # inpainting entry point
+├── InPainting/
+│   ├── restore.py                   # InPainting entry point
 │   ├── inputs/
 │   │   ├── rabbit/
 │   │   │   ├── frames/
@@ -91,12 +91,12 @@ pip install -r requirements.txt
 #### Predict forces from test dataset (with ground truth comparison):
 ```bash
 cd EndoForce-Net
-python infer.py --data test/binarydata --gt test/ground_truth/forces.csv
+python infer.py --data test/binary_frames --gt test/ground_truth/forces.csv
 ```
 
 #### Predict forces from rabbit experiment data:
 ```bash
-python infer.py --data rabbit/binarydata
+python infer.py --data rabbit/binary_frames
 ```
 
 #### Input Data Format
@@ -108,20 +108,20 @@ python infer.py --data rabbit/binarydata
 
 #### Process rabbit experiment video:
 ```bash
-cd painting
-python restore.py --video inputs/rabbit/prodata --mask inputs/rabbit/mask
+cd InPainting
+python restore.py --video inputs/rabbit/frames --mask inputs/rabbit/masks
 ```
 
 #### Process test dataset video:
 ```bash
-python restore.py --video inputs/test/prodata --mask inputs/test/mask
+python restore.py --video inputs/test/frames --mask inputs/test/masks
 ```
 
 #### Output Files
 - **inpaint_out.mp4**: Restored video (saved in results/)
 - **masked_in.mp4**: Masked input video (saved in results/)
 
-### ProPainter Reference
+### Inpainting Reference
 This module is based on [ProPainter](https://github.com/sczhou/ProPainter) with minor modifications for this project.
 
 ---
@@ -147,12 +147,12 @@ frame_0002  Pred_X: 0.019  Pred_Y: -0.044  Pred_Z: -0.263
 - **Source**: Live rabbit experiments
 - **Images**: 200 frames (frame_0001.jpg - frame_0200.jpg)
 - **Formats**: 
-  - `prodata/`: Raw original images
-  - `binarydata/`: Binarized images for model input
+  - `raw_frames/`: Raw original images
+  - `binary_frames/`: Binarized images for model input
 
 ### Test Dataset
 - **Images**: Binary images for testing
-- **Ground Truth**: data.csv containing:
+- **Ground Truth**: forces.csv containing:
   - Column 1: Image name (e.g., "frame_0001")
   - Column 2-4: True X, Y, Z force values
 

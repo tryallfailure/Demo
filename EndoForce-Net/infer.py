@@ -3,8 +3,8 @@
 """
 Real-time prediction printer and force curve plot.
 Usage:
-    python main.py --data test/binarydata
-    python main.py --data rabbit/binarydata
+    python infer.py --data test/binary_frames --gt test/ground_truth/forces.csv
+    python infer.py --data rabbit/binary_frames
 """
 import argparse, glob, os, pandas as pd
 from pathlib import Path
@@ -12,7 +12,7 @@ from PIL import Image
 from torch.utils.data import Dataset, DataLoader
 import torch, matplotlib.pyplot as plt
 from torchvision import transforms
-from utils.model import CustomResNet18
+from utils.EndoForce_net import CustomResNet18
 
 
 class ForceImageFolder(Dataset):
@@ -41,7 +41,7 @@ def predict_and_plot(img_dir: Path):
     loader = DataLoader(ForceImageFolder(str(img_dir), transform),
                         batch_size=1, shuffle=False)
 
-    model_path = Path(__file__).resolve().parent / 'pth' / 'model.pth'
+    model_path = Path(__file__).resolve().parent / 'weights' / 'EndoForce_net.pth'
     model = CustomResNet18(num_classes=3).to(device)
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
@@ -56,7 +56,7 @@ def predict_and_plot(img_dir: Path):
                   f'Pred_Y: {pred[1]:.3f}  Pred_Z: {pred[2]:.3f}')
 
     # load ground-truth if exists
-    true_csv = (img_dir.parent / 'data' / 'data.csv').resolve()
+    true_csv = (img_dir.parent / 'ground_truth' / 'forces.csv').resolve()
     has_true = true_csv.exists()
     true_df = pd.DataFrame()
     if has_true:
