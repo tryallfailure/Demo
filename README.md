@@ -26,7 +26,7 @@ T-Scope/
 │   │   ├── binary_frames/
 │   │   └── ground_truth/
 │   │       └── forces.csv           # X,Y,Z labels [N]
-│   ├── model/
+│   ├── utils/
 │   │   └── EndoForce_net.py         # network definition
 │   └── infer.py                     # inference script
 │
