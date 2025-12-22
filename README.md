@@ -6,8 +6,8 @@ This repository provides the complete implementation, datasets, and results for 
 
 ## Contents
 1. **EndoForce-Net**: 3D force-vector regression from thermoelectric imprint images  
-2. **Painting restoration**: removal of Te-pattern occlusion from endoscopic video  
-3. **Datasets & results**: in-vivo rabbit sequences and ex-vivo test sets with ground-truth force labels
+2. **Inpainting restoration**: removal of Te-pattern occlusion from endoscopic video  
+3. **Datasets & Results**: in-vivo rabbit sequences and ex-vivo test sets with ground-truth force labels
 
 ---
 
