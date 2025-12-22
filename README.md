@@ -121,9 +121,6 @@ python restore.py --video inputs/test/frames --mask inputs/test/masks
 - **inpaint_out.mp4**: Restored video (saved in results/)
 - **masked_in.mp4**: Masked input video (saved in results/)
 
-### Inpainting Reference
-This module is based on [ProPainter](https://github.com/sczhou/ProPainter) with minor modifications for this project.
-
 ---
 
 ## 📈 Output Examples
@@ -155,11 +152,3 @@ frame_0002  Pred_X: 0.019  Pred_Y: -0.044  Pred_Z: -0.263
 - **Ground Truth**: forces.csv containing:
   - Column 1: Image name (e.g., "frame_0001")
   - Column 2-4: True X, Y, Z force values
-
-
----
-
-## 🙏 Acknowledgments
-
-- ProPainter module based on [sczhou/ProPainter](https://github.com/sczhou/ProPainter)
-- Model architecture based on ResNet-18
