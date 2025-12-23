@@ -91,7 +91,7 @@ pip install -r requirements.txt
 #### Predict forces from test dataset (with ground truth comparison):
 ```bash
 cd EndoForce-Net
-python infer.py --data test/binary_frames --gt test/ground_truth/forces.csv
+python infer.py --data test/binary_frames
 ```
 
 #### Predict forces from rabbit experiment data:
