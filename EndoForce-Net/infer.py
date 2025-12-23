@@ -3,7 +3,7 @@
 """
 Real-time prediction printer and force curve plot.
 Usage:
-    python infer.py --data test/binary_frames --gt test/ground_truth/forces.csv
+    python infer.py --data test/binary_frames
     python infer.py --data rabbit/binary_frames
 """
 import argparse, glob, os, pandas as pd
